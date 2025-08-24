@@ -7,12 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { 
-  User, 
-  Settings, 
-  Package, 
-  MessageSquare, 
-  TrendingUp, 
+import {
+  User,
+  Settings,
+  Package,
+  MessageSquare,
+  TrendingUp,
   Star,
   MapPin,
   Mail,
@@ -23,6 +23,7 @@ import {
   Plus
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import ProductManagement from "@/components/Dashboard/ProductManagement";
 
 interface Profile {
   id: string;
@@ -269,57 +270,7 @@ const Dashboard = () => {
           </TabsContent>
 
           <TabsContent value="products">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center justify-between">
-                  My Products
-                  <Button asChild>
-                    <Link to="/dashboard/products/new">
-                      <Plus className="w-4 h-4 mr-2" />
-                      Add New Product
-                    </Link>
-                  </Button>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {dashboardData?.products?.map((product: Product) => (
-                    <Card key={product.id} className="group hover:shadow-md transition-shadow">
-                      <CardHeader>
-                        <div className="flex items-center justify-between">
-                          <Badge variant={product.status === 'active' ? 'default' : 'secondary'}>
-                            {product.status}
-                          </Badge>
-                          <span className="text-xs text-muted-foreground">
-                            {product.categories?.name}
-                          </span>
-                        </div>
-                        <CardTitle className="line-clamp-2">{product.name}</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-                          {product.description}
-                        </p>
-                        <div className="flex items-center justify-between">
-                          <span className="font-medium text-primary">{product.price_range}</span>
-                          <Button variant="outline" size="sm">Edit</Button>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-                {dashboardData?.products?.length === 0 && (
-                  <div className="text-center py-12">
-                    <Package className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="text-lg font-medium mb-2">No products yet</h3>
-                    <p className="text-muted-foreground mb-4">Start by adding your first product</p>
-                    <Button asChild>
-                      <Link to="/dashboard/products/new">Add Product</Link>
-                    </Button>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+            <ProductManagement />
           </TabsContent>
 
           <TabsContent value="inquiries">
