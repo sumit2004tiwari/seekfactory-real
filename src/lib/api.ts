@@ -212,6 +212,87 @@ class ApiClient {
     });
   }
 
+  // Product management endpoints
+  async getProducts(filters?: any): Promise<ApiResponse<any[]>> {
+    const isBackendAvailable = await this.checkBackendAvailability();
+
+    if (!isBackendAvailable) {
+      throw new Error('Backend server not available. Please start the MongoDB backend server first.\n\nRun: cd backend && npm run dev');
+    }
+
+    const params = new URLSearchParams(filters);
+    return this.request(`/products?${params.toString()}`);
+  }
+
+  async getProduct(id: string): Promise<ApiResponse<any>> {
+    const isBackendAvailable = await this.checkBackendAvailability();
+
+    if (!isBackendAvailable) {
+      throw new Error('Backend server not available. Please start the MongoDB backend server first.\n\nRun: cd backend && npm run dev');
+    }
+
+    return this.request(`/products/${id}`);
+  }
+
+  async createProduct(productData: any): Promise<ApiResponse<any>> {
+    const isBackendAvailable = await this.checkBackendAvailability();
+
+    if (!isBackendAvailable) {
+      throw new Error('Backend server not available. Please start the MongoDB backend server first.\n\nRun: cd backend && npm run dev');
+    }
+
+    return this.request('/products', {
+      method: 'POST',
+      body: JSON.stringify(productData),
+    });
+  }
+
+  async updateProduct(id: string, productData: any): Promise<ApiResponse<any>> {
+    const isBackendAvailable = await this.checkBackendAvailability();
+
+    if (!isBackendAvailable) {
+      throw new Error('Backend server not available. Please start the MongoDB backend server first.\n\nRun: cd backend && npm run dev');
+    }
+
+    return this.request(`/products/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(productData),
+    });
+  }
+
+  async deleteProduct(id: string): Promise<ApiResponse> {
+    const isBackendAvailable = await this.checkBackendAvailability();
+
+    if (!isBackendAvailable) {
+      throw new Error('Backend server not available. Please start the MongoDB backend server first.\n\nRun: cd backend && npm run dev');
+    }
+
+    return this.request(`/products/${id}`, {
+      method: 'DELETE',
+    });
+  }
+
+  async getMyProducts(filters?: any): Promise<ApiResponse<any[]>> {
+    const isBackendAvailable = await this.checkBackendAvailability();
+
+    if (!isBackendAvailable) {
+      throw new Error('Backend server not available. Please start the MongoDB backend server first.\n\nRun: cd backend && npm run dev');
+    }
+
+    const params = new URLSearchParams(filters);
+    return this.request(`/products/my/products?${params.toString()}`);
+  }
+
+  async getCategories(): Promise<ApiResponse<string[]>> {
+    const isBackendAvailable = await this.checkBackendAvailability();
+
+    if (!isBackendAvailable) {
+      throw new Error('Backend server not available. Please start the MongoDB backend server first.\n\nRun: cd backend && npm run dev');
+    }
+
+    return this.request('/products/categories');
+  }
+
   // Health check
   async checkHealth(): Promise<ApiResponse> {
     const isBackendAvailable = await this.checkBackendAvailability();
