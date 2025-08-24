@@ -1,71 +1,37 @@
 // app/page.tsx
-"use client";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Header from "@/components/Layout/Header";
-import { Footer } from "react-day-picker";
+import Footer from "@/components/Layout/Footer";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { apiClient } from "@/lib/api";
+import { useToast } from "@/hooks/use-toast";
+import { Search, Filter, Package, Eye } from "lucide-react";
 
 interface Product {
-  id: number;
-  title: string;
+  _id: string;
+  name: string;
+  description: string;
   category: string;
-  price: string;
-  stock: boolean;
-  moq: string;
-  leadTime: string;
-  image: string;
+  priceRange: string;
+  minOrderQuantity?: number;
+  countryOfOrigin?: string;
+  tags: string[];
+  images: string[];
+  status: string;
+  views: number;
+  supplier: {
+    _id: string;
+    name: string;
+    companyName?: string;
+    isVerified: boolean;
+  };
+  createdAt: string;
 }
-
-const products: Product[] = [
-  {
-    id: 1,
-    title: "Test CNC Machine",
-    category: "manufacturing",
-    price: "$50,000",
-    stock: true,
-    moq: "1 units",
-    leadTime: "4-6 weeks",
-    image: "https://images.unsplash.com/photo-1647427060118-4911c9821b82?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzF8MHwxfHNlYXJjaHwyfHxpbmR1c3RyaWFsJTIwbWFjaGluZXJ5fGVufDB8fHx8MTc1NTY4MTQ3NXww&ixlib=rb-4.1.0&q=85",
-  },
-  {
-    id: 2,
-    title: "Test CNC Machine",
-    category: "manufacturing",
-    price: "$50,000",
-    stock: true,
-    moq: "1 units",
-    leadTime: "4-6 weeks",
-    image: "https://images.unsplash.com/photo-1647427060118-4911c9821b82?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzF8MHwxfHNlYXJjaHwyfHxpbmR1c3RyaWFsJTIwbWFjaGluZXJ5fGVufDB8fHx8MTc1NTY4MTQ3NXww&ixlib=rb-4.1.0&q=85",
-  },
-  {
-    id: 3,
-    title: "Test CNC Machine",
-    category: "manufacturing",
-    price: "$50,000",
-    stock: true,
-    moq: "1 units",
-    leadTime: "4-6 weeks",
-    image: "https://images.unsplash.com/photo-1647427060118-4911c9821b82?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzF8MHwxfHNlYXJjaHwyfHxpbmR1c3RyaWFsJTIwbWFjaGluZXJ5fGVufDB8fHx8MTc1NTY4MTQ3NXww&ixlib=rb-4.1.0&q=85",
-  },
-  {
-    id: 4,
-    title: "Test CNC Machine",
-    category: "manufacturing",
-    price: "$50,000",
-    stock: true,
-    moq: "1 units",
-    leadTime: "4-6 weeks",
-    image: "https://images.unsplash.com/photo-1647427060118-4911c9821b82?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzF8MHwxfHNlYXJjaHwyfHxpbmR1c3RyaWFsJTIwbWFjaGluZXJ5fGVufDB8fHx8MTc1NTY4MTQ3NXww&ixlib=rb-4.1.0&q=85",
-  },
-  {
-    id: 5,
-    title: "Test CNC Machine",
-    category: "manufacturing",
-    price: "$50,000",
-    stock: true,
-    moq: "1 units",
-    leadTime: "4-6 weeks",
-    image: "https://images.unsplash.com/photo-1647427060118-4911c9821b82?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzF8MHwxfHNlYXJjaHwyfHxpbmR1c3RyaWFsJTIwbWFjaGluZXJ5fGVufDB8fHx8MTc1NTY4MTQ3NXww&ixlib=rb-4.1.0&q=85",
-  },
-];
 
 export default function Home() {
   return (
