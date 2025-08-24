@@ -16,6 +16,7 @@ import Dashboard from "./pages/Dashboard";
 import ProfileManagement from "./pages/ProfileManagement";
 import CreateProduct from "./pages/CreateProduct";
 import CreateInquiry from "./pages/CreateInquiry";
+import ProductForm from "./pages/ProductForm";
 import SupplierGuidelines from "./pages/SupplierGuidelines";
 import VerificationProcess from "./pages/VerificationProcess";
 import SuccessStories from "./pages/SuccessStories";
@@ -51,6 +52,8 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dashboard/profile" element={<ProfileManagement />} />
           <Route path="/dashboard/products/new" element={<CreateProduct />} />
+          <Route path="/products/new" element={<ProductForm />} />
+          <Route path="/products/edit/:id" element={<ProductForm />} />
           <Route path="/inquiry/new" element={<CreateInquiry />} />
           <Route path="/supplier-guidelines" element={<SupplierGuidelines />} />
           <Route path="/verification" element={<VerificationProcess />} />

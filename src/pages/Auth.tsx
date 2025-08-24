@@ -40,12 +40,19 @@ const Auth = () => {
     setIsLoading(true);
 
     try {
-      await signIn(signInData);
+      const result = await signIn(signInData);
       toast({
         title: "Welcome back!",
         description: "Successfully signed in to SeekFactory.",
       });
-      navigate("/");
+
+      // Redirect based on user role
+      const userRole = result?.user?.role || result?.role;
+      if (userRole === 'supplier') {
+        navigate("/dashboard");
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       toast({
         title: "Sign In Failed",
@@ -91,12 +98,19 @@ const Auth = () => {
         phone: signUpData.phone || undefined,
       };
 
-      await signUp(userData);
+      const result = await signUp(userData);
       toast({
         title: "Account Created!",
         description: "Welcome to SeekFactory! Your account has been created successfully.",
       });
-      navigate("/");
+
+      // Redirect based on user role
+      const userRole = userData.role;
+      if (userRole === 'supplier') {
+        navigate("/dashboard");
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       toast({
         title: "Sign Up Failed",
